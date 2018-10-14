@@ -5,3 +5,10 @@
   <img alt="Deploy to Salesforce"
        src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
 </a>
+<br/>
+After deployment, please follow below steps and configure app & tabs visibility
+<ol>
+  <li>Go to setup --> App Manager and click on Edit for "Capgemini Tech Challenge 2018" app.</li>
+  <li>Click on User profiles and select profiles to make app visible.</li>
+  <li>Go to Setup --> Profiles and update "Accounts", "Account Edit Delete" & "Account Mass Edit Delete" tabs visiblity to "Default Off"</li>
+  </ol>
