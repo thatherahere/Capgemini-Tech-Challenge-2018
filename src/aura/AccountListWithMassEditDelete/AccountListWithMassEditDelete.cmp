@@ -1,0 +1,80 @@
+<!--
+ @author  Govind Thathera
+ @version 1.0
+ @since   14/10/2018 
+-->
+<aura:component controller="AccountListController" implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="accounts" type="List"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="accountIds" type="List"/>
+    <aura:attribute name="accountSourceOptions" type="list"/>
+    <aura:attribute name="showEditModal" type="Boolean" default="false"/>
+    <aura:attribute name="fields" type="String[]" default="['Name','AccountNumber','OwnerId','AccountSource','ParentId','AnnualRevenue','Type','CreatedById','LastModifiedById','Industry','Description','Phone','Fax']"/>
+    
+    <!-- Account's Data table -->
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem class="slds-m-bottom_small" size="12">
+            <lightning:card variant="Narrow" title="Accounts" iconName="standard:account">
+                <aura:set attribute="actions"> 
+                    <lightning:buttonGroup>
+                	<lightning:button label="Update Account Source" title="Update Account Source" onclick="{! c.handleSourceUpdate }"/>
+                    <lightning:button label="Delete" title="Delete" onclick="{! c.handleDelete }"/>
+                    </lightning:buttonGroup>
+                </aura:set>
+                
+                <div> 
+                    <lightning:datatable 
+                                         aura:id="accountTable"
+                                         columns="{! v.columns }"
+                                         data="{! v.accounts }"
+                                         keyField="id"
+                                         onrowaction="{! c.handleRowActions }"
+                                         onrowselection="{!c.handleRowSelection}"/>
+                </div>
+            </lightning:card>
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+    <!-- Edit account source modal --> 
+    <section role="dialog" aura:id="editAccountSourceModal" tabindex="-1" aria-labelledby="editAccountSourceModalId" aria-modal="true" aria-describedby="editAccountSourceModal" class="slds-modal slds-modal_editAccountSourceModal">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <lightning:buttonIcon iconName="utility:close" size="medium" variant="bare-inverse" onclick="{! c.closeSourceUpdateModal }" alternativeText="Close modal" class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"/>
+                <h2 id="editAccountSourceModal-heading" class="slds-text-heading_medium slds-hyphenate">Select New Account Source</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium" id="editAccountSourceModalId">
+                <lightning:select aura:id="accountSource" name="accountSource" label="Account Source">
+                    <option value="">choose one...</option>
+                    <aura:iteration items="{!v.accountSourceOptions}" var="option">
+                        <option value="{!option}" text="{!option}"></option>
+                    </aura:iteration>
+                </lightning:select>
+            </div>
+            <footer class="slds-modal__footer">
+                <lightning:button variant="neutral" name="Cancel" label="Cancel" onclick="{!c.closeSourceUpdateModal}" />
+                <lightning:button variant="brand" name="Update" label="Update" onclick="{!c.doSaveSourceUpdate}"/>
+            </footer>
+        </div>
+    </section> 
+    
+    <!-- Delete confirmation modal -->
+    <section role="dialog" aura:id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalId" aria-modal="true" aria-describedby="deleteAccountModal" class="slds-modal">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <lightning:buttonIcon iconName="utility:close" size="medium" variant="bare-inverse" onclick="{! c.closeDeleteModal }" alternativeText="Close modal" class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"/>
+                <h2 id="deleteAccountModal-heading" class="slds-text-heading_medium slds-hyphenate">Delete Account(s)</h2>
+            </header> 
+             
+            <div class="slds-modal__content slds-p-around_medium slds-text-align_center" id="deleteAccountModal">
+            	Are you sure you want to delete selected account(s)?
+            </div>
+            <footer class="slds-modal__footer">
+                <lightning:button variant="neutral" name="Cancel" label="Cancel" onclick="{!c.closeDeleteModal}" />
+                <lightning:button variant="brand" name="delete" label="Delete" onclick="{!c.handleDeleteSelected}" />
+            </footer>
+        </div>
+    </section> 
+    <div aura:id="slds-backdrop" class="slds-backdrop"></div>
+</aura:component>

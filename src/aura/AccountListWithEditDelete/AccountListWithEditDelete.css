@@ -1,0 +1,9 @@
+.THIS .customAction-truncate button{
+	max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.THIS .slds-modal__container{
+    max-width: 840px !important;
+}

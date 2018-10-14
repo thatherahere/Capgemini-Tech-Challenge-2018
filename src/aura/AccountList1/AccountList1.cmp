@@ -1,0 +1,46 @@
+<!--
+ @author  Govind Thathera
+ @version 1.0
+ @since   14/10/2018 
+-->
+<aura:component controller="AccountListController" implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="accounts" type="List"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="maxRowSelection" type="Integer" default="1"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="fields" type="String[]" default="['Name','AccountNumber','OwnerId','AccountSource','ParentId','AnnualRevenue','Type','CreatedById','LastModifiedById','Industry','Description','Phone','Fax']"/>
+    
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem class="slds-m-bottom_small" size="12">
+            <lightning:card variant="Narrow" title="Accounts" iconName="standard:account">
+                <div style="height: 240px"> 
+                    <lightning:datatable 
+                                         columns="{! v.columns }"
+                                         data="{! v.accounts }"
+                                         keyField="id"
+                                         maxRowSelection="{! v.maxRowSelection }"
+                                         onrowselection="{! c.getSelectedAccount }"
+                                         onrowaction="{! c.openRecord }"/>
+                </div>
+            </lightning:card>
+            
+        </lightning:layoutItem>
+        <lightning:layoutItem size="12">
+            <aura:if isTrue="{!!empty(v.recordId)}">
+                <lightning:card variant="Narrow" title="Account" iconName="standard:account">
+                    <div class="slds-p-horizontal_medium">
+                        <lightning:recordForm 
+                                              recordId="{!v.recordId}" 
+                                              objectApiName="Account" 
+                                              fields="{!v.fields}"
+                                              columns="2"
+                                              mode="readonly"
+                                              onerror ="{!c.handleError}"/>
+                    </div>
+                </lightning:card>
+            </aura:if> 
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>
