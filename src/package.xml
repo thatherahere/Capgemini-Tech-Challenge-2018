@@ -18,5 +18,9 @@
         <members>*</members>
         <name>CustomTab</name>
     </types>
+    <types>
+        <members>Campgemini_Tech_Challenge_2018_UtilityBar</members>
+        <name>FlexiPage</name>
+    </types>
     <version>38.0</version>
 </Package>
