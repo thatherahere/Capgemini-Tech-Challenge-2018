@@ -12,3 +12,6 @@ After deployment, please follow below steps and configure app & tabs visibility
   <li>Click on User profiles and select profiles to make app visible.</li>
   <li>Go to Setup --> Profiles and update "Accounts", "Account Edit Delete" & "Account Mass Edit Delete" tabs visiblity to "Default Off"</li>
   </ol>
+  
+  <h3>Video Demo</h3>
+  https://youtu.be/Pue22fzMgAY
